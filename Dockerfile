@@ -7,5 +7,5 @@ RUN mvn -f /usr/src/app/pom.xml clean install -DskipTests
 FROM openjdk:17
 RUN mkdir api
 COPY --from=build /usr/src/app/target/*.jar api/classificados.jar
-EXPOSE 9000
+EXPOSE 9100
 ENTRYPOINT ["java", "-jar", "/api/classificados.jar"]
