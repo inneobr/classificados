@@ -4,12 +4,12 @@ import java.util.Date;
 import java.util.UUID;
 import org.inneo.classificados.modelos.Classified;
 
-public record ClassifiedResponse(UUID uuid, String title, String content, UUID publisher, String category, Date published, Integer views) {
+public record ClassifiedResponse(UUID uuid, String title, String content, UUID publisher, UUID categoryId, String category, Date published, Integer views) {
 	public ClassifiedResponse(Classified classified) {
-		 this(classified.getUuid(), classified.getTitle(), classified.getContent(), classified.getPublisherId(), classified.getCategory(), classified.getPublished(), classified.getViews());	
+		 this(classified.getUuid(), classified.getTitle(), classified.getContent(), classified.getPublisherId(), classified.getCategoryId(), classified.getCategory(), classified.getPublished(), classified.getViews());	
 	}
 	
 	public static ClassifiedResponse construir(Classified classified) {
-		return new ClassifiedResponse(classified.getUuid(), classified.getTitle(), classified.getContent(), classified.getPublisherId(),  classified.getCategory(), classified.getPublished(), classified.getViews());
+		return new ClassifiedResponse(classified.getUuid(), classified.getTitle(), classified.getContent(), classified.getPublisherId(), classified.getCategoryId(), classified.getCategory(), classified.getPublished(), classified.getViews());
 	}
 }
