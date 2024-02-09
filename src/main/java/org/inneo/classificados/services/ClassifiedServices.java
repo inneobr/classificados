@@ -49,6 +49,8 @@ public class ClassifiedServices {
 	
 	public ClassifiedResponse toView(UUID uuid) {
 		Classified classified = classifiedRep.findById(uuid).get();
+		Category category = categoryRep.findById(classified.getCategoryId()).get();
+		classified.setCategory(category.getName());
 		classified.newView();
 		classifiedRep.save(classified);
 		
