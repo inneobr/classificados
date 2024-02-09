@@ -1,5 +1,6 @@
  package org.inneo.classificados.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,8 +9,9 @@ import lombok.RequiredArgsConstructor;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
+import org.inneo.classificados.modelos.Category;
 import org.inneo.classificados.modelos.Classified;
+import org.inneo.classificados.repositories.CategoryRep;
 import org.inneo.classificados.repositories.ClassifiedRep;
 import org.inneo.classificados.requestSpec.ClassifieldSpecs;
 import org.inneo.classificados.requestsDto.ClassifiedRequest;
@@ -18,6 +20,7 @@ import org.inneo.classificados.requestsDto.ClassifiedResponse;
 @Service @RequiredArgsConstructor @Transactional @Slf4j
 public class ClassifiedServices {
 	private final ClassifiedRep classifiedRep;
+	private final CategoryRep categoryRep;
 	
 	public void create(ClassifiedRequest request) {
 		Classified classified = Classified.builder()
@@ -55,7 +58,14 @@ public class ClassifiedServices {
 	}
 	
 	public List<ClassifiedResponse> findAll() {
-		List<ClassifiedResponse> response = classifiedRep.findAll(ClassifieldSpecs.isActive(true)).stream().map(ClassifiedResponse::new).toList();
+		List<Classified> classifieds = new ArrayList<>();
+		for(Classified classified :classifiedRep.findAll(ClassifieldSpecs.isActive(true))){
+			Category category = categoryRep.findById(classified.getCategoryId()).get();
+			classified.setCategory(category.getName());
+			classifieds.add(classified);
+		}
+		
+		List<ClassifiedResponse> response = classifieds.stream().map(ClassifiedResponse::new).toList();
 		log.info("Listing classified {}.", response.size());
 		return response;
 	}

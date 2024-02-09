@@ -9,6 +9,7 @@ import jakarta.persistence.Lob;
 import lombok.NoArgsConstructor;
 
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import jakarta.persistence.Column;
@@ -52,6 +53,9 @@ public class Classified {
     
 	@Column(name = "views")
 	private Integer views;
+	
+	@Transient
+	private String category;
 	
 	public void newView() {
 		if(views == null) views = 0;
