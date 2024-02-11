@@ -22,7 +22,7 @@ public class ClassifiedServices {
 	private final ClassifiedRep classifiedRep;
 	private final CategoryRep categoryRep;
 	
-	public void create(ClassifiedRequest request) {
+	public Classified create(ClassifiedRequest request) {
 		Classified classified = Classified.builder()
 				.title(request.title())
 				.content(request.content())
@@ -30,10 +30,10 @@ public class ClassifiedServices {
 				.categoryId(request.category())
 				.active(true)
 				.views(0)
-				.build();
+				.build();		
 		
-		classifiedRep.save(classified);
 		log.info("Classified {} successfully published", classified.getUuid());
+		return classifiedRep.save(classified);
 	} 
 	
 	public void update(ClassifiedResponse request) {
