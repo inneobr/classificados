@@ -2,7 +2,7 @@ spring:
   profiles:
     active: prod
   application:
-    name: classificados
+    name: api-classificados
   cloud:
     config:
       uri: http://config-cloud:7000
