@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: classificados
+  cloud:
+    config:
+      uri: http://config-cloud:7000
